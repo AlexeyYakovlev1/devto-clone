@@ -1,0 +1,5 @@
+{
+    "jwtKey": "dev.to-clone-application-mern__as",
+    "port": 5000,
+    "mongoUrl": "mongodb+srv://alexey:OVWCeJ4CodZClVht@cluster0.cfqr1.mongodb.net/main?retryWrites=true&w=majority"
+}
