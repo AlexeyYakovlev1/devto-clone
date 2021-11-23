@@ -13,7 +13,7 @@ module.exports = async function(req, res, next) {
             return res.status(401).json({ message: "Нет авторизации" });
         }
 
-        const decoded = jwt.varify(token, config.get("jwtKey"));
+        const decoded = jwt.verify(token, config.get("jwtKey"));
         req.user = decoded;
 
         next();

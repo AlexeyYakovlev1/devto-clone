@@ -8,8 +8,10 @@ const URL = config.get("mongoUrl");
 
 app.use(express.json({ extended: true }));
 
-app.use("/api/users", require("./routes/auth.routes"));
+app.use("/api/auth", require("./routes/auth.routes"));
+app.use("/api/users", require("./routes/user.routes"));
 app.use("/api/posts", require("./routes/post.routes"));
+app.use("/api/comments", require("./routes/comment.routes"));
 
 const start = async() => {
     try {
