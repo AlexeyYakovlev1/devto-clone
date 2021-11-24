@@ -19,13 +19,13 @@ export function useAuth() {
         localStorage.removeItem("userData");
     }, [])
 
-    React.useCallback(() => {
-        const { token, info } = JSON.parse(localStorage.getItem("userData"));
+    React.useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("userData"));
 
-        if (token) {
-            login(token, info);
+        if (data && data.token) {
+            login(data.token, data.info);
         }
-        
+
         setReady(true);
     }, [login]);
 
