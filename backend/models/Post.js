@@ -6,7 +6,10 @@ const schema = new Schema({
     createdAt: { type: Date, required: true, default: Date.now },
     owner: { type: Types.ObjectId, ref: "user" },
     likes: { type: Number, default: 0 },
-    comments: [{ type: Types.ObjectId, ref: "comment" }]
+    comments: [{ type: Types.ObjectId, ref: "comment" }],
+    coverPhoto: { type: String },
+    photos: [{ type: String }],
+    tags: [{type: String, required: true}]
 })
 
 module.exports = model("post", schema);

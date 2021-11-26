@@ -30,18 +30,20 @@ const Header = () => {
                         >
                             <NavLink to="/">DEV</NavLink>
                         </Typography>
-                        <TextField label="Поиск..." variant="outlined" sx={{marginLeft: 3, width: 400}} />
+                        <TextField variant="outlined" placeholder="Поиск..." sx={{marginLeft: 3, width: 400}} />
                     </Box>
 
                     <Box className="header__right" sx={{
                         display: "flex",
                         alignItems: "center"
                     }}>
-                        <Button variant="contained">Создать пост</Button>
-                        <NavLink to={"/profile/" + userInfo._id}>
+                        <Button variant="contained">
+                            <NavLink to="/new">Создать пост</NavLink>
+                        </Button>
+                        <NavLink to={"/user/" + userInfo._id}>
                             <Avatar
                                 alt={userInfo.name} 
-                                src={userInfo.avatar} 
+                                src={userInfo.avatar}
                                 sx={{
                                     marginLeft: 3,
                                     border: 1,

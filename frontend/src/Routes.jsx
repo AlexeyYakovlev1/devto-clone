@@ -4,6 +4,7 @@ import propTypes from "prop-types";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import NewPost from "./pages/NewPost";
 
 export const useRoutes = (isAuth) => {
     if (!isAuth) {
@@ -19,6 +20,7 @@ export const useRoutes = (isAuth) => {
     return (
         <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/new" component={NewPost} />
             <Redirect to="/" />
         </Switch>
     )
