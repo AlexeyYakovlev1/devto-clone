@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NewPost from "./pages/NewPost";
+import PostPage from "./pages/PostPage";
 
 export const useRoutes = (isAuth) => {
     if (!isAuth) {
@@ -21,6 +22,7 @@ export const useRoutes = (isAuth) => {
         <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/new" component={NewPost} />
+            <Route path="/post/:id" component={PostPage} />
             <Redirect to="/" />
         </Switch>
     )
