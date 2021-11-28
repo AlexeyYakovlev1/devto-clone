@@ -228,8 +228,8 @@ const NewPost = () => {
                         <Button disabled={loading} variant="contained" onClick={addNewPostHandler}>Опубликовать</Button>
                     </Box>
                     <Box sx={{marginLeft: 2, maxWidth: "25%"}}>
-                        <Typography variant="h6" component="span">Основы работы редактора</Typography>
-                        <Typography variant="h7" component="p" marginTop={1}>
+                        <Typography variant="h6" component="div">Основы работы редактора</Typography>
+                        <Typography variant="h7" component="span" marginTop={1}>
                             Используйте текстовые поля для написания и форматирования записей.
                             Вы можете использовать теги для добавления богатого контента.
                             Также вы можете добавлять фото к постам.

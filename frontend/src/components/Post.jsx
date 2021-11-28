@@ -28,7 +28,7 @@ const Post = ({ info }) => {
 
         fetchUser();
         // eslint-disable-next-line
-    }, []);
+    }, [info.owner]);
 
     return (
         <Card variant="outlined" sx={{

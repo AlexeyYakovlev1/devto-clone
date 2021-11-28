@@ -98,4 +98,18 @@ router.get("/:id", authMiddleware, async(req, res) => {
     }
 })
 
+router.get("/owner/:id", authMiddleware, async(req, res) => {
+    try {
+        const findPost = await Post.find({owner: req.params.id});
+
+        if (!findPost) {
+            return res.status(400).json({ message: "Пост не найден" });
+        }
+
+        res.status(200).json(findPost);
+    } catch(e) {
+        res.status(500).json({ message: "Ошибка сервера: " + e.message });
+    }
+})
+
 module.exports = router;
