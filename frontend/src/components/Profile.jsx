@@ -15,7 +15,7 @@ const Profile = ({ info }) => {
             borderRadius: 2,
             padding: "10px",
             position: "sticky",
-            top: 15,
+            top: 80,
             right: 0
         }}>
             <Box sx={{marginBottom: 1, display: "flex", alignItems: "flex-end"}}>
@@ -29,7 +29,9 @@ const Profile = ({ info }) => {
                     info._id !== userInfo._id ?
                     <Button sx={{marginBottom: 2, width: "100%"}} variant="contained">Подписаться</Button>
                     :
-                    <Button sx={{marginBottom: 2, width: "100%"}} variant="contained">Перейти</Button>
+                    <Button sx={{marginBottom: 2, width: "100%"}} variant="contained">
+                        <NavLink to={"/user/" + userInfo._id}>Перейти</NavLink>
+                    </Button>
                 }
                 
                 <Box sx={{

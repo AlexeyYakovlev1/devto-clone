@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
 const authMiddleware = require("../middlewares/auth.middleware");
+const { check, validationResult } = require("express-validator");
 
 router.delete("/delete/:id", authMiddleware, async(req, res) => {
     try {
@@ -26,13 +27,37 @@ router.delete("/delete/:id", authMiddleware, async(req, res) => {
     }
 })
 
-router.put("/change/:id", authMiddleware, async(req, res) => {
+router.put(
+    "/change/:id",
+    [
+        check("name", "Длина имени минимум 2 символа").isLength({ min: 2 }),
+        check("email", "Некорректная почта").isEmail(),
+        check("city", "Длина города минимум 2 символа").isLength({ min: 2 }),
+        check("bio", "Длина биографии минимум 10 символа").isLength({ min: 10 }),
+        check("skills", "Длина навыков минимум 2 символа").isLength({ min: 2 }),
+        check("work", "Длина работы минимум 2 символа").isLength({ min: 2 }),
+    ],
+    authMiddleware, async(req, res) => {
     try {
-        const { name, email, avatar, city, bio } = req.body;
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array(),
+                message: "Некорректные данные"
+            })
+        }
+
+        const { name, email, avatar, city, bio, skills, work } = req.body;
         const findUser = await User.findById(req.params.id);
+        const someUser = await User.findOne({ email });
 
         if (!findUser) {
             return res.status(404).json({ message: "Пользователь не найден" });
+        }
+
+        if (someUser) {
+            return res.status(404).json({ message: "Пользователь с такой почтой уже существует" });
         }
 
         await User.updateOne({
@@ -42,7 +67,9 @@ router.put("/change/:id", authMiddleware, async(req, res) => {
             email: email || findUser.email,
             avatar: avatar || findUser.avatar,
             city: city || findUser.city,
-            bio: bio || findUser.bio
+            bio: bio || findUser.bio,
+            skills: skills || findUser.skills,
+            work: work || findUser.work,
         }})
 
         res.status(200).json({ message: "Пользователь изменен" });

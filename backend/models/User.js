@@ -10,7 +10,7 @@ const schema = new Schema({
     posts: [{ type: Types.ObjectId, ref: "post" }],
     work: { type: String, required: true, default: "" },
     skills: { type: String, required: true, default: "" },
-    createdAt: { type: Date, requried: true, default: Date.now }
+    createdAt: { type: Date, required: true, default: Date.now }
 })
 
 module.exports = model("user", schema);
