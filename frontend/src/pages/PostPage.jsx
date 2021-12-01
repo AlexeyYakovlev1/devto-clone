@@ -5,6 +5,7 @@ import { NavLink, useParams, useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import Profile from "../components/Profile";
 import MyModal from '../components/MyModal';
+import ReactMarkdown from 'react-markdown';
 
 const PostPage = () => {
     const [open, setOpen] = React.useState(false);
@@ -222,7 +223,11 @@ const PostPage = () => {
                             <Typography sx={{
                                 fontSize: "1.2rem",
                                 fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', san-serif"
-                            }}>{info.description}</Typography>
+                            }}>
+                                <ReactMarkdown>
+                                    {info.description}
+                                </ReactMarkdown>
+                            </Typography>
                         </Box>
 
                         <Box sx={{
