@@ -2,9 +2,10 @@ const router = require("express").Router();
 const authMiddleware = require("../middlewares/auth.middleware")
 const Comment = require("../models/comment");
 const { check, validationResult } = require("express-validator");
+const Post = require("../models/Post");
 
 router.post(
-    "/add",
+    "/add/:id",
     [
         check("text", "Сообщение должно иметь минимум 6 символов").isLength({ min: 6 })
     ],
@@ -20,10 +21,13 @@ router.post(
             })
         }
 
+        const findPost = await Post.findById(req.params.id);
         const { text } = req.body;
+
         const newComment = new Comment({
             text,
-            owner: req.user.id
+            owner: req.user.id,
+            post: findPost._id
         });
 
         await newComment.save();
@@ -72,6 +76,15 @@ router.put("/change/:id", authMiddleware, async(req, res) => {
 router.get("/", authMiddleware, async(req, res) => {
     try {
         const comments = await Comment.find();
+        res.status(201).json({ comments });
+    } catch(e) {
+        res.status(500).json({ message: "Ошибка сервера" });
+    }
+})
+
+router.get("/post/:id", authMiddleware, async(req, res) => {
+    try {
+        const comments = await Comment.find({ post: req.params.id });
         res.status(201).json({ comments });
     } catch(e) {
         res.status(500).json({ message: "Ошибка сервера" });

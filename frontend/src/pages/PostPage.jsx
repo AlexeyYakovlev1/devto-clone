@@ -1,13 +1,16 @@
 import React from 'react';
-import { Alert, Avatar, Box, Button, Card, CardContent, CardMedia, CircularProgress, List, ListItem, Typography, TextareaAutosize } from "@mui/material";
+import { Alert, Avatar, Box, Button, Card, CardContent, CardMedia, CircularProgress, List, ListItem, Typography } from "@mui/material";
 import { ThumbUpAltOutlined, ChatBubbleOutlineOutlined } from '@mui/icons-material';
 import { NavLink, useParams, useHistory } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import Profile from "../components/Profile";
 import MyModal from '../components/MyModal';
+import AddComment from "../components/AddComment";
+import Comment from "../components/Comment";
 import ReactMarkdown from 'react-markdown';
 
 const PostPage = () => {
+    const [comments, setComments] = React.useState([]);
     const [open, setOpen] = React.useState(false);
     const history = useHistory()
     const [info, setInfo] = React.useState({});
@@ -60,6 +63,26 @@ const PostPage = () => {
         fetchPost();
         // eslint-disable-next-line
     }, [info.owner]);
+
+    React.useEffect(() => {
+        async function fetchComments() {
+            const response = await fetch(`/api/comments/post/${info._id}`, {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
+
+            response.json().then(data => {
+                if (response.ok) {
+                    setComments(data.comments);
+                }
+            })
+        }
+
+        fetchComments();
+        // eslint-disable-next-line
+    }, [info, user]);
 
     const deletePost = async() => {
         try {
@@ -115,7 +138,6 @@ const PostPage = () => {
                     <Button variant="outlined" sx={{marginLeft: 2}} onClick={() => setOpen(false)}>Закрыть</Button>
                 </Typography>
             </MyModal>}
-            {message.text && <Alert sx={{marginTop: 1}} severity={message.type}>{message.text}</Alert>}
             <Box sx={{
                 display: "flex",
                 alignItems: "flex-start",
@@ -277,32 +299,15 @@ const PostPage = () => {
                                     </Box>
                                 }
                             </Box>
+                            {message.text && <Alert sx={{marginBottom: 1, marginTop: 1}} severity={message.type}>{message.text}</Alert>}
+                            <AddComment setMessage={setMessage} />
 
-                            <Box sx={{
-                                marginBottom: 2
-                            }}>
-                                <Box sx={{
-                                    display: "flex",
-                                    alignItems: "flex-start"
-                                }}>
-                                    <Avatar alt={userInfo.name} src={userInfo.avatar} sx={{marginRight: 1}} />
-                                    <TextareaAutosize
-                                        minRows={3}
-                                        placeholder="Добавьте текст комментария"
-                                        style={{
-                                            width: "100%",
-                                            borderColor: "lightgrey",
-                                            borderRadius: 4,
-                                            padding: 10,
-                                            minHeight: "30px",
-                                            fontSize: 16,
-                                            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', san-serif"
-                                        }}
-                                    />
-                                </Box>
-                                <Box padding="15px 48px 0 48px">
-                                    <Button disabled={loading} variant="contained">Отправить</Button>
-                                </Box>
+                            <Box>
+                                {comments.length ? comments.map(comment => {
+                                    return (
+                                        <Comment key={comment._id} info={comment} />
+                                    )
+                                }) : false}
                             </Box>
                         </Box>
                     </CardContent>
