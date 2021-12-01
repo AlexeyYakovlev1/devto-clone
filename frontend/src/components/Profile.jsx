@@ -37,12 +37,12 @@ const Profile = ({ info }) => {
                 <Box sx={{
                     marginBottom: 1
                 }}>
-                    <Typography>{info.bio}</Typography>
+                    <Typography component="span">{info.bio}</Typography>
                 </Box>
                 <Box sx={{
                     marginBottom: 1
                 }}>
-                    <Typography sx={{
+                    <Typography component="span" sx={{
                         fontWeight: 'bold', 
                         textTransform: "uppercase",
                         color: "gray",
@@ -53,7 +53,7 @@ const Profile = ({ info }) => {
                 <Box sx={{
                     marginBottom: 1
                 }}>
-                    <Typography sx={{
+                    <Typography component="span" sx={{
                         fontWeight: 'bold', 
                         textTransform: "uppercase",
                         color: "gray",
@@ -63,7 +63,7 @@ const Profile = ({ info }) => {
                 </Box>
 
                 <Box>
-                    <Typography sx={{
+                    <Typography component="span" sx={{
                         fontWeight: 'bold', 
                         textTransform: "uppercase",
                         color: "gray",

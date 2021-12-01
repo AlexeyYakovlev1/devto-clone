@@ -25,6 +25,7 @@ export const useRoutes = (isAuth) => {
             <Route exact path="/" component={Home} />
             <Route exact path="/new" component={NewPost} />
             <Route exact path="/settings" component={Settings} />
+            <Route path="/change/post/:id" component={NewPost} />
             <Route path="/post/:id" component={PostPage} />
             <Route path="/user/:id" component={ProfilePage} />
             <Redirect to="/" />

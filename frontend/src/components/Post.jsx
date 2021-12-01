@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Card, Box, Avatar, Typography, CardContent, CardMedia, List, CardActions, Button } from "@mui/material";
+import { Card, Box, Avatar, Typography, CardContent, CardMedia, CardActions, Button } from "@mui/material";
 import { ThumbUpAltOutlined, ChatBubbleOutlineOutlined } from '@mui/icons-material';
 import { AuthContext } from "../context/AuthContext";
 import { NavLink } from "react-router-dom";
@@ -71,7 +71,7 @@ const Post = ({ info }) => {
                     </Typography>
                 </Box>
 
-                <List
+                <Box
                     sx={{
                         width: "100%",
                         display: "flex",
@@ -81,6 +81,7 @@ const Post = ({ info }) => {
                     {info.tags.map((tag, index) => {
                         return (
                             <Typography
+                                component="span"
                                 className="post__tags-item"
                                 key={tag + index}
                                 sx={{fontSize: "14px", color: "grey", padding: "2px"}}
@@ -89,11 +90,11 @@ const Post = ({ info }) => {
                             </Typography>
                         )
                     })}
-                </List>
+                </Box>
             </CardContent>
-            <CardActions sx={{padding: "0 50px 20px"}}>
+            <CardActions sx={{marginTop: 1, padding: "0 50px 20px"}}>
                 <Button size="small" sx={{width: "175px"}}>
-                    <Typography sx={{
+                    <Typography component="span" sx={{
                         display: "flex",
                         alignItems: "center",
                         width: "100%",
@@ -101,13 +102,13 @@ const Post = ({ info }) => {
                         color: "#000"
                     }}>
                         <ThumbUpAltOutlined />
-                        <Typography margin={"0 10px 0"}>{info.comments.length}</Typography>
+                        <Typography component="span" margin={"0 10px 0"}>{info.comments.length}</Typography>
                         Понравилось
                     </Typography>
                 </Button>
 
                 <Button size="small" sx={{width: "280px", marginLeft: 2}}>
-                    <Typography sx={{
+                    <Typography component="span" sx={{
                         display: "flex",
                         alignItems: "center",
                         width: "100%",
@@ -115,7 +116,7 @@ const Post = ({ info }) => {
                         color: "#000"
                     }}>
                         <ChatBubbleOutlineOutlined />
-                        <Typography margin={"0 10px 0"}>{info.likes}</Typography>
+                        <Typography component="span" margin={"0 10px 0"}>{info.likes}</Typography>
                         Добавить комментарий
                     </Typography>
                 </Button>

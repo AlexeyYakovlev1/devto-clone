@@ -104,13 +104,13 @@ const PostPage = () => {
     return (
         <>
             {userInfo._id === user._id && <MyModal open={open} setOpen={setOpen}>
-                <Typography variant="h6" component="h2">
+                <Typography variant="h6" component="h3">
                     Вы уверены, что хотите удалить этот пост?
                 </Typography>
-                <Typography sx={{ mt: 2 }}>
+                <Typography component="p" sx={{ mt: 2 }}>
                     Вернуть его уже не удастся.
                 </Typography>
-                <Typography sx={{ mt: 3 }}>
+                <Typography component="div" sx={{ mt: 3 }}>
                     <Button variant="contained" color="error" onClick={deletePost}>Удалить</Button>
                     <Button variant="outlined" sx={{marginLeft: 2}} onClick={() => setOpen(false)}>Закрыть</Button>
                 </Typography>
@@ -143,7 +143,7 @@ const PostPage = () => {
                             flexDirection: "column"
                         }}>
                             <ThumbUpAltOutlined />
-                            <Typography>{info.likes}</Typography>
+                            <Typography component="span">{info.likes}</Typography>
                         </ListItem>
                         {
                             info.comments &&
@@ -153,7 +153,7 @@ const PostPage = () => {
                                 flexDirection: "column"
                             }}>
                                 <ChatBubbleOutlineOutlined />
-                                <Typography>{info.comments.length}</Typography>
+                                <Typography component="span">{info.comments.length}</Typography>
                             </ListItem>
                         }
                     </List>
@@ -208,6 +208,7 @@ const PostPage = () => {
                                 {info.tags.map((tag, index) => {
                                     return (
                                         <Typography
+                                            component="span"
                                             className="post__tags-item"
                                             key={tag + index}
                                             sx={{fontSize: "14px", color: "grey", padding: "2px"}}
@@ -220,7 +221,7 @@ const PostPage = () => {
                         </Box>
 
                         <Box>
-                            <Typography sx={{
+                            <Typography component="p" sx={{
                                 fontSize: "1.2rem",
                                 fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', san-serif"
                             }}>
@@ -241,7 +242,7 @@ const PostPage = () => {
                                 justifyContent: "space-between",
                                 alignItems: "center"
                             }}>
-                                <Typography variant="h6">Комментарии ({info.comments ? info.comments.length : 0})</Typography>
+                                <Typography component="span" variant="h6">Комментарии ({info.comments ? info.comments.length : 0})</Typography>
                                 {
                                     userInfo._id !== user._id ?
                                     <Button
@@ -263,7 +264,7 @@ const PostPage = () => {
                                             variant="outlined"
                                             color="secondary"
                                         >
-                                            Изменить
+                                            <NavLink to={`/change/post/${info._id}`}>Изменить</NavLink>
                                         </Button>
                                         <Button
                                             disabled={loading}

@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from "../components/Post";
-import { Box, CircularProgress, List } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { AuthContext } from "../context/AuthContext";
 
 const Home = () => {
@@ -34,7 +34,7 @@ const Home = () => {
 
     return (
         <Box>
-            <List
+            <Box
                 sx={{
                     width: "100%"
                 }}>
@@ -44,7 +44,7 @@ const Home = () => {
                             <Post key={post._id} info={post} />
                         )
                     })}
-            </List>
+            </Box>
         </Box>
     )
 }

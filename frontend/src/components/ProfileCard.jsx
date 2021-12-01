@@ -34,21 +34,21 @@ const ProfileCard = ({ open, setOpen }) => {
                         borderRadius: 1
                     }}>
                         <NavLink to={`/user/${userInfo._id}`}>
-                            <Typography variant="h6">{userInfo.name}</Typography>
+                            <Typography variant="h6" component="span">{userInfo.name}</Typography>
                         </NavLink>
                     </ListItem>
                     <ListItem className="profileCard__item" sx={{borderRadius: 1}}>
                         <NavLink to="/new">
-                            <Typography>Создать пост</Typography>
+                            <Typography component="span">Создать пост</Typography>
                         </NavLink>
                     </ListItem>
                     <ListItem className="profileCard__item" sx={{borderRadius: 1}}>
                         <NavLink to="/settings">
-                            <Typography>Настройки</Typography>
+                            <Typography component="span">Настройки</Typography>
                         </NavLink>
                     </ListItem>
                     <ListItem className="profileCard__item" sx={{cursor: "pointer", borderRadius: 1}} onClick={logout}>
-                        <Typography>Выйти</Typography>
+                        <Typography component="span">Выйти</Typography>
                     </ListItem>
                 </List>
             </CardContent>

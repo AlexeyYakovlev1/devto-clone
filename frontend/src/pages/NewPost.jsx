@@ -1,8 +1,11 @@
 import React from 'react';
 import { Box, Button, TextField, Typography, Alert } from "@mui/material";
 import { AuthContext } from "../context/AuthContext";
+import { useParams } from "react-router-dom";
 
 const NewPost = () => {
+    const postId = useParams().id;
+    const [post, setPost] = React.useState({});
     const { token } = React.useContext(AuthContext)
     const coverRef = React.useRef();
     const photoRef = React.useRef();
@@ -13,6 +16,59 @@ const NewPost = () => {
         title: "", description: "", coverPhoto: "", tags: []
     })
     const [loading, setLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        async function fetchPost() {
+            const response = await fetch("/api/posts/" + postId, {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
+
+            response.json().then(data => {
+                if (response.ok) {
+                    setPost(data);
+                    setInfo(data);
+                }
+            })
+        }
+
+        fetchPost();
+        // eslint-disable-next-line
+    }, []);
+
+    const changePostHandler = async() => {
+        try {
+            setLoading(true);
+            const response = await fetch("/api/posts/change/" + post._id, {
+                method: "PUT",
+                body: JSON.stringify(info),
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token
+                }
+            })
+
+            response.json().then(data => {
+                setLoading(false);
+                if (response.ok) {
+                    setMessageInfo({
+                        text: data.message, type: "success"
+                    })
+                } else {
+                    setMessageInfo({
+                        text: data.message, type: "error"
+                    })
+                }
+            })
+        } catch(e) {
+            setLoading(false);
+            setMessageInfo({
+                text: e.message, type: "error"
+            })
+        }
+    }
 
     const addNewPostHandler = async() => {
         try {
@@ -105,7 +161,7 @@ const NewPost = () => {
                         width: "75%",
                     }}>
                         <Box sx={{
-                            height: "70vh",
+                            minHeight: "70vh",
                             backgroundColor: "#fff", 
                             padding: "30px 40px", 
                             borderRadius: "6px", 
@@ -182,6 +238,7 @@ const NewPost = () => {
                                     rows={2}
                                 />
                                 <TextField
+                                    value={info.tags && info.tags.join(", ")}
                                     InputProps={{
                                         disableUnderline: true
                                     }}
@@ -221,18 +278,27 @@ const NewPost = () => {
                                     variant="standard"
                                     placeholder="Запишите описание вашего поста..."
                                     multiline
-                                    rows={!info.coverPhoto ? 8 : 3}
+                                    rows="8"
                                 />
                             </Box>    
                         </Box>
-                        <Button disabled={loading} variant="contained" onClick={addNewPostHandler}>Опубликовать</Button>
+                        {!postId ? <Button
+                            disabled={loading}
+                            variant="contained"
+                            onClick={addNewPostHandler}
+                        >Опубликовать
+                        </Button> : <Button
+                            disabled={loading}
+                            variant="contained"
+                            onClick={changePostHandler}
+                        >Изменить
+                        </Button>}
                     </Box>
                     <Box sx={{marginLeft: 2, maxWidth: "25%"}}>
                         <Typography variant="h6" component="div">Основы работы редактора</Typography>
                         <Typography variant="h7" component="span" marginTop={1}>
                             Используйте текстовые поля для написания и форматирования записей.
-                            Вы можете использовать теги для добавления богатого контента.
-                            Также вы можете добавлять фото к постам.
+                            Поддерживается markdown текст. Также вы можете добавить обложку к посту.
                         </Typography>
                     </Box>
                 </Box>

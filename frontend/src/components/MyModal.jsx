@@ -9,7 +9,7 @@ const MyModal = ({children, open, setOpen}) => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 500,
+        width: 380,
         bgcolor: '#fff',
         border: '1px solid lightgrey',
         p: 4,

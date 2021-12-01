@@ -52,9 +52,16 @@ router.delete("/delete/:id", authMiddleware, async(req, res) => {
     }
 })
 
-router.put("/change/:id", authMiddleware, async(req, res) => {
+router.put(
+    "/change/:id",
+    [
+        check("title", "Длина заголовка минимум 5 символов").isLength({ min: 5 }),
+        check("description", "Длина описания минимум 10 символов").isLength({ min: 10 }),
+        check("tags", "Должен быть хотя-бы один тег").isLength({ min: 1 })
+    ],
+    authMiddleware, async(req, res) => {
     try {
-        const { title, description } = req.body;
+        const { title, description, tags, coverPhoto } = req.body;
         const findPost = await Post.findById(req.params.id);
 
         if (!findPost) {
@@ -65,7 +72,10 @@ router.put("/change/:id", authMiddleware, async(req, res) => {
             _id: req.params.id
         }, {$set: {
             title: title || findPost.title,
-            description: description || findPost.description
+            description: description || findPost.description,
+            tags: tags || findPost.tags,
+            coverPhoto: coverPhoto || findPost.coverPhoto,
+            createdAt: new Date()
         }})
 
         res.status(200).json({ message: "Пост изменен" });
