@@ -264,7 +264,7 @@ const PostPage = () => {
                                 justifyContent: "space-between",
                                 alignItems: "center"
                             }}>
-                                <Typography component="span" variant="h6">Комментарии ({info.comments ? info.comments.length : 0})</Typography>
+                                <Typography component="span" variant="h6">Комментарии ({comments.length})</Typography>
                                 {
                                     userInfo._id !== user._id ?
                                     <Button

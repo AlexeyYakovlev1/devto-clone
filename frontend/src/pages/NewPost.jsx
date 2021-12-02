@@ -8,7 +8,6 @@ const NewPost = () => {
     const [post, setPost] = React.useState({});
     const { token } = React.useContext(AuthContext)
     const coverRef = React.useRef();
-    const photoRef = React.useRef();
     const [messageInfo, setMessageInfo] = React.useState({
         text: "", type: ""
     })
@@ -254,21 +253,6 @@ const NewPost = () => {
                                 display: "flex",
                                 flexDirection: "column"
                             }}>
-                                <input type="file" style={{display: "none"}} ref={photoRef} />
-                                <Button
-                                    disabled={loading}
-                                    sx={{
-                                        marginTop: 3,
-                                        marginBottom: 3,
-                                        maxWidth: "33%",
-                                        color: "#000",
-                                        border: "1px solid grey",
-                                        boxShadow: 1
-                                    }}
-                                    variant="outlined"
-                                    onClick={() => photoRef.current.click()}
-                                >Загрузить фото</Button>
-
                                 <TextField
                                     value={info.description}
                                     onChange={event => setInfo({...info, description: event.target.value})}
